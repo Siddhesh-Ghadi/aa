@@ -1,0 +1,31 @@
+From ec8fcc830b730fe665a4f0363ffcd15b8a85f0b8 Mon Sep 17 00:00:00 2001
+From: "Brian W. Hart" <hartb@us.ibm.com>
+Date: Mon, 4 May 2020 18:33:01 +0000
+Subject: [PATCH] avoid duplicate nvcc ccbin setting
+
+---
+ setup.py | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 836b28d..9d9583c 100644
+--- a/setup.py
++++ b/setup.py
+@@ -66,10 +66,10 @@ def get_extensions():
+             "-D__CUDA_NO_HALF2_OPERATORS__",
+         ]
+ 
+-        # It's better if pytorch can do this by default ..
+-        CC = os.environ.get("CC", None)
+-        if CC is not None:
+-            extra_compile_args["nvcc"].append("-ccbin={}".format(CC))
++        # WML CE pytorch does this by default
++        #CC = os.environ.get("CC", None)
++        #if CC is not None:
++        #    extra_compile_args["nvcc"].append("-ccbin={}".format(CC))
+ 
+     include_dirs = [extensions_dir]
+ 
+-- 
+1.8.3.1
+

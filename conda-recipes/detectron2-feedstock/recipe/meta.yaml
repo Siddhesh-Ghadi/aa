@@ -1,0 +1,66 @@
+{% set version = "0.1.2" %}
+{% set name = "detectron2" %}
+
+package:
+   name: {{ name }}
+   version: {{ version }}
+
+source:
+  git_url: https://github.com/facebookresearch/detectron2
+  git_rev: v{{ version }}
+  patches:
+    - 0001-avoid-duplicate-nvcc-ccbin-setting.patch
+    - 0001-Fix-spelling-of-skipTest.patch
+
+build:
+  number: 0 
+  script: {{ PYTHON }} setup.py install --single-version-externally-managed --record=record.txt
+
+requirements:
+  build:
+    - cmake
+    - make
+    - {{ compiler('cxx') }}
+    - pkg-config
+  host:
+    - python
+    - cloudpickle
+    - cudatoolkit >=10.2
+    - cudatoolkit-dev >=10.2
+    - mock
+    - pytorch >=1.4.0
+    - tabulate
+    - termcolor >=1.1
+    - tqdm >4.29.0
+    - yacs >=0.1.6
+  run:
+    - python
+    - cloudpickle
+    - cudatoolkit >=10.2
+    - future  # used by caffe2
+    - fvcore
+    - matplotlib
+    - mock
+    - pillow
+    - pycocotools
+    - pydot  # used to save caffe2 SVGs
+    - pytorch >=1.4.0
+    - tabulate
+    - tensorboard
+    - termcolor >=1.1
+    - tqdm >4.29.0
+
+test:
+  source_files:
+    - tests
+  imports:
+    - detectron2
+  commands:
+    - python -m unittest discover -v -s ./tests
+ 
+about:
+  home: https://github.com/facebookresearch/detectron2
+  license: Apache License 2.0
+  license_family: Apache
+  license_file: LICENSE
+  summary: "Detectron2 is FAIR's next-generation platform for object detection and segmentation"
