@@ -31,7 +31,7 @@ CONDARC
 
 conda config --prepend channels https://public.dhe.ibm.com/ibmdl/export/pub/software/server/ibm-ai/conda/
 export IBM_POWERAI_LICENSE_ACCEPT=yes
-
+conda config --show
 conda install --yes --quiet conda-forge-ci-setup=2 conda-build=3.19.2 -c conda-forge
 
 conda install -y git
